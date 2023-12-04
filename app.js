@@ -1,3 +1,33 @@
+var SerialPort = require('serialport').SerialPort;
+var xbee_api = require('xbee-api');
+var C = xbee_api.constants;
+
+var xbeeAPI = new xbee_api.XBeeAPI({
+  api_mode: 1
+});
+
+var serialport = new SerialPort({ path: "COM4", baudRate: 2400});
+
+serialport.pipe(xbeeAPI.parser);
+xbeeAPI.builder.pipe(serialport);
+
+/*
+serialport.on("open", function() {
+  var frame_obj = {
+    type: 0x00, 
+    id: 0x00,
+    destination64: "0013a200421be22b",
+    data: "$,0,0,0,3,12,2023,@" 
+  }
+  xbeeAPI.builder.write(frame_obj);
+});
+*/
+
+xbeeAPI.parser.on("data", function(frame) {
+	console.log(">>", frame.data.toString('utf8'));
+});
+
+/*
 const { SerialPort } = require("serialport");
 const { ReadlineParser } = require("@serialport/parser-readline");
 const serialport = new SerialPort({ path: "COM4", baudRate: 2400});
@@ -6,9 +36,9 @@ const readline = require("readline");
 const read = serialport.pipe(new ReadlineParser({ delimiter: '\r\n'}));
 
 
-read.on("data", console.log);
+read.on("data", console.log);np
 
-/*
+
 read.on("data", (data) => {
   const dataString = data.toString();
   console.log(deviceValues(dataString));
@@ -93,7 +123,7 @@ function getIrms(dataArr) {
   const irms = parseFloat(dataArr[3]);
   return irms;  
 }
-*/
+
 
 // Create an interface for reading user input from the console
 const rl = readline.createInterface({
@@ -112,3 +142,4 @@ rl.question("Update date and time (if needed): \n", (command) => {
       rl.close();
     });
 });
+*/

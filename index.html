@@ -1,21 +1,55 @@
 <!DOCTYPE html>
-<html lang='en'>
+<html lang="en">
 <head>
-  <meta charset='UTF-8'>
-  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-  <title>Socket.io Example</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Room Voltage Monitoring</title>
+  <style>
+    /* Styles */
+    .device-info {
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      padding: 10px;
+    }
+  </style>
 </head>
 <body>
-  <ul id='output'></ul>
+  <div id="output"></div>
 
-  <script src='/socket.io/socket.io.js'></script>
+  <script src="/socket.io/socket.io.js"></script>
   <script>
     const socket = io();
+    const devices = {};
 
+    // Update the content when 'data' event is received
     socket.on('data', function(data) {
-      const listItem = document.createElement('li');
-      listItem.textContent = `${data.deviceID} >> ${data.deviceVrms}`;
-      document.getElementById('output').appendChild(listItem);
+      // Find or create a container for the device with the corresponding ID
+      let deviceContainer = devices[data.deviceID];
+      
+      if (!deviceContainer) {
+        // If the container does not exist, create it
+        deviceContainer = document.createElement('div');
+        deviceContainer.id = `device-${data.deviceID}`;
+        deviceContainer.className = 'device-info';
+        devices[data.deviceID] = deviceContainer;
+
+        // Sort the devices by ID and update the HTML
+        const sortedDevices = Object.keys(devices).sort((a, b) => parseInt(a) - parseInt(b));
+        const outputContainer = document.getElementById('output');
+        outputContainer.innerHTML = ''; // Clear existing content
+
+        sortedDevices.forEach(deviceID => {
+          outputContainer.appendChild(devices[deviceID]);
+        });
+      }
+
+      // Update Device ID (assuming it remains the same for each device)
+      deviceContainer.innerHTML = `<p>Device ID: ${data.deviceID}</p>`;
+      
+      // Update Device VRMS dynamically
+      const deviceVrmsParagraph = document.createElement('p');
+      deviceVrmsParagraph.textContent = `Device VRMS: ${data.deviceVrms.toFixed(2)}`;
+      deviceContainer.appendChild(deviceVrmsParagraph);
     });
   </script>
 </body>

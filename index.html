@@ -1,56 +1,80 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Room Voltage Monitoring</title>
+  <title>Device Data</title>
   <style>
-    /* Styles */
-    .device-info {
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .header {
+      font-size: 18px;
       margin-bottom: 20px;
-      border: 1px solid #ccc;
+    }
+
+    .device-container {
+      max-width: 150px;
+      width: 100%;
+      border: 1px solid #000000;
       padding: 10px;
+      box-sizing: border-box;
+    }
+
+    .device-box {
+      border: 1px solid #ffffff;
+      margin-bottom: 5px;
+      padding: 5px;
+      list-style-type: none;
     }
   </style>
 </head>
 <body>
-  <div id="output"></div>
+  <div class="header" id="dateTime"></div>
+  <div class="device-container" id="deviceList"></div>
 
-  <script src="/socket.io/socket.io.js"></script>
+  <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
   <script>
     const socket = io();
-    const devices = {};
+    const deviceData = {};
 
-    // Update the content when 'data' event is received
+    function updateDateTime() {
+      const dateTimeElement = document.getElementById('dateTime');
+      const now = new Date();
+      const dateTimeString = now.toLocaleString();
+      dateTimeElement.textContent = dateTimeString;
+    }
+
+    updateDateTime();
+
+    setInterval(updateDateTime, 1000);
+
     socket.on('data', function(data) {
-      // Find or create a container for the device with the corresponding ID
-      let deviceContainer = devices[data.deviceID];
-      
-      if (!deviceContainer) {
-        // If the container does not exist, create it
-        deviceContainer = document.createElement('div');
-        deviceContainer.id = `device-${data.deviceID}`;
-        deviceContainer.className = 'device-info';
-        devices[data.deviceID] = deviceContainer;
-
-        // Sort the devices by ID and update the HTML
-        const sortedDevices = Object.keys(devices).sort((a, b) => parseInt(a) - parseInt(b));
-        const outputContainer = document.getElementById('output');
-        outputContainer.innerHTML = ''; // Clear existing content
-
-        sortedDevices.forEach(deviceID => {
-          outputContainer.appendChild(devices[deviceID]);
-        });
-      }
-
-      // Update Device ID (assuming it remains the same for each device)
-      deviceContainer.innerHTML = `<p>Device ID: ${data.deviceID}</p>`;
-      
-      // Update Device VRMS dynamically
-      const deviceVrmsParagraph = document.createElement('p');
-      deviceVrmsParagraph.textContent = `Device VRMS: ${data.deviceVrms.toFixed(2)}`;
-      deviceContainer.appendChild(deviceVrmsParagraph);
+      updateDeviceData(data);
     });
+
+    function updateDeviceData(data) {
+      deviceData[data.deviceID] = data.deviceVrms;
+
+      const sortedDevices = Object.keys(deviceData).sort((a, b) => parseInt(a) - parseInt(b));
+
+      const deviceList = document.getElementById('deviceList');
+      deviceList.innerHTML = '';
+
+      sortedDevices.forEach(deviceID => {
+        const deviceBox = document.createElement('div');
+        deviceBox.className = 'device-box';
+        deviceBox.textContent = `Device #${deviceID} VRMS: ${deviceData[deviceID]}`;
+        deviceList.appendChild(deviceBox);
+      });
+    }
   </script>
 </body>
 </html>

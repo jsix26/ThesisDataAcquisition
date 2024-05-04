@@ -50,8 +50,8 @@ xbeeAPI.parser.on('data', function(frame) {
     case 2:
       con.connect(function(err) {
         if(err) throw err;
-        console.log("Reading device 1.");
-        var sql = "INSERT INTO roomvrmsreading (Timestamp, Device1) VALUES ?";
+        console.log("Reading device 2.");
+        var sql = "INSERT INTO roomvrmsreading (Timestamp, Device2) VALUES ?";
         var values = [
           [deviceVrms, formattedDate]
         ]
@@ -64,8 +64,8 @@ xbeeAPI.parser.on('data', function(frame) {
     case 3:
       con.connect(function(err) {
         if(err) throw err;
-        console.log("Reading device 1.");
-        var sql = "INSERT INTO roomvrmsreading (Timestamp, Device1) VALUES ?";
+        console.log("Reading device 3.");
+        var sql = "INSERT INTO roomvrmsreading (Timestamp, Device3) VALUES ?";
         var values = [
           [deviceVrms, formattedDate]
         ]
@@ -78,8 +78,8 @@ xbeeAPI.parser.on('data', function(frame) {
     case 4:
       con.connect(function(err) {
         if(err) throw err;
-        console.log("Reading device 1.");
-        var sql = "INSERT INTO roomvrmsreading (Timestamp, Device1) VALUES ?";
+        console.log("Reading device 4.");
+        var sql = "INSERT INTO roomvrmsreading (Timestamp, Device4) VALUES ?";
         var values = [
           [deviceVrms, formattedDate]
         ]
@@ -92,8 +92,8 @@ xbeeAPI.parser.on('data', function(frame) {
     case 5:
       con.connect(function(err) {
         if(err) throw err;
-        console.log("Reading device 1.");
-        var sql = "INSERT INTO roomvrmsreading (Timestamp, Device1) VALUES ?";
+        console.log("Reading device 5.");
+        var sql = "INSERT INTO roomvrmsreading (Timestamp, Device5) VALUES ?";
         var values = [
           [deviceVrms, formattedDate]
         ]
@@ -106,8 +106,8 @@ xbeeAPI.parser.on('data', function(frame) {
     case 6:
       con.connect(function(err) {
         if(err) throw err;
-        console.log("Reading device 1.");
-        var sql = "INSERT INTO roomvrmsreading (Timestamp, Device1) VALUES ?";
+        console.log("Reading device 6.");
+        var sql = "INSERT INTO roomvrmsreading (Timestamp, Device6) VALUES ?";
         var values = [
           [deviceVrms, formattedDate]
         ]
@@ -120,8 +120,8 @@ xbeeAPI.parser.on('data', function(frame) {
     case 11:
       con.connect(function(err) {
         if(err) throw err;
-        console.log("Reading device 1.");
-        var sql = "INSERT INTO roomvrmsreading (Timestamp, Device1) VALUES ?";
+        console.log("Reading device 11.");
+        var sql = "INSERT INTO roomvrmsreading (Timestamp, Device11) VALUES ?";
         var values = [
           [deviceVrms, formattedDate]
         ]
@@ -134,8 +134,8 @@ xbeeAPI.parser.on('data', function(frame) {
     case 15:
       con.connect(function(err) {
         if(err) throw err;
-        console.log("Reading device 1.");
-        var sql = "INSERT INTO roomvrmsreading (Timestamp, Device1) VALUES ?";
+        console.log("Reading device 15.");
+        var sql = "INSERT INTO roomvrmsreading (Timestamp, Device15) VALUES ?";
         var values = [
           [deviceVrms, formattedDate]
         ]

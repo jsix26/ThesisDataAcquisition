@@ -40,10 +40,11 @@ xbeeAPI.parser.on('data', function(frame) {
   const deviceVrms = parseFloat(dataArray[2]);
   const now = new Date();
   const formattedDate = now.toLocaleString();
-  const deviceData = ('@' + deviceID + ', ' + deviceVrms + ', ' + formattedDate + '$');
-
+  const deviceData = (deviceID + ', ' + deviceVrms + ', ' + formattedDate);
   switch (deviceID) {
     case 1:
+      const deviceVrms1 = parseFloat(dataArray[2]);
+      io.emit('data', {deviceID, deviceVrms1, formattedDate});
       connection.connect(function(err) {
         if(err) throw err;
         console.log("Reading device 1.");
@@ -58,6 +59,8 @@ xbeeAPI.parser.on('data', function(frame) {
       })
       break;
     case 2:
+      const deviceVrms2 = parseFloat(dataArray[2]);
+      io.emit('data', {deviceID, deviceVrms2, formattedDate});
       connection.connect(function(err) {
         if(err) throw err;
         console.log("Reading device 2.");
@@ -72,6 +75,8 @@ xbeeAPI.parser.on('data', function(frame) {
       })
       break;
     case 3:
+      const deviceVrms3 = parseFloat(dataArray[2]);
+      io.emit('data', {deviceID, deviceVrms3, formattedDate});
       connection.connect(function(err) {
         if(err) throw err;
         console.log("Reading device 3.");
@@ -86,6 +91,8 @@ xbeeAPI.parser.on('data', function(frame) {
       })
       break;    
     case 4:
+      const deviceVrms4 = parseFloat(dataArray[2]);
+      io.emit('data', {deviceID, deviceVrms4, formattedDate});
       connection.connect(function(err) {
         if(err) throw err;
         console.log("Reading device 4.");
@@ -100,6 +107,8 @@ xbeeAPI.parser.on('data', function(frame) {
       })
       break;
     case 5:
+      const deviceVrms5 = parseFloat(dataArray[2]);
+      io.emit('data', {deviceID, deviceVrms5, formattedDate});
       connection.connect(function(err) {
         if(err) throw err;
         console.log("Reading device 5.");
@@ -114,6 +123,8 @@ xbeeAPI.parser.on('data', function(frame) {
       })
       break;
     case 6:
+      const deviceVrms6 = parseFloat(dataArray[2]);
+      io.emit('data', {deviceID, deviceVrms6, formattedDate});
       connection.connect(function(err) {
         if(err) throw err;
         console.log("Reading device 6.");
@@ -127,21 +138,25 @@ xbeeAPI.parser.on('data', function(frame) {
         })
       })
       break;
-      case 7:
-        connection.connect(function(err) {
+    case 7:
+      const deviceVrms7 = parseFloat(dataArray[2]);
+      io.emit('data', {deviceID, deviceVrms7, formattedDate});
+      connection.connect(function(err) {
+        if(err) throw err;
+        console.log("Reading device 7.");
+        var sql = "INSERT INTO roomvrmsreading (ID_VRMS_DATE_TIME) VALUES ?";
+        var values = [
+          [deviceData]
+        ]
+        connection.query(sql, [values], function(err) {
           if(err) throw err;
-          console.log("Reading device 7.");
-          var sql = "INSERT INTO roomvrmsreading (ID_VRMS_DATE_TIME) VALUES ?";
-          var values = [
-            [deviceData]
-          ]
-          connection.query(sql, [values], function(err) {
-            if(err) throw err;
-            console.log ("Records updated!");
-          })
+          console.log ("Records updated!");
         })
-        break;
+      })
+      break;
     case 8:
+      const deviceVrms8 = parseFloat(dataArray[2]);
+      io.emit('data', {deviceID, deviceVrms8, formattedDate});
       connection.connect(function(err) {
         if(err) throw err;
         console.log("Reading device 8.");
@@ -155,21 +170,25 @@ xbeeAPI.parser.on('data', function(frame) {
         })
       })
       break;      
-      case 9:
-        connection.connect(function(err) {
+    case 9:
+      const deviceVrms9 = parseFloat(dataArray[2]);
+      io.emit('data', {deviceID, deviceVrms9, formattedDate});
+      connection.connect(function(err) {
+        if(err) throw err;
+        console.log("Reading device 9.");
+        var sql = "INSERT INTO roomvrmsreading (ID_VRMS_DATE_TIME) VALUES ?";
+        var values = [
+          [deviceData]
+        ]
+        connection.query(sql, [values], function(err) {
           if(err) throw err;
-          console.log("Reading device 9.");
-          var sql = "INSERT INTO roomvrmsreading (ID_VRMS_DATE_TIME) VALUES ?";
-          var values = [
-            [deviceData]
-          ]
-          connection.query(sql, [values], function(err) {
-            if(err) throw err;
-            console.log ("Records updated!");
-          })
+          console.log ("Records updated!");
         })
-        break;
+      })
+      break;
     case 10:
+      const deviceVrms10 = parseFloat(dataArray[2]);
+      io.emit('data', {deviceID, deviceVrms10, formattedDate});
       connection.connect(function(err) {
         if(err) throw err;
         console.log("Reading device 10.");
@@ -184,6 +203,8 @@ xbeeAPI.parser.on('data', function(frame) {
       })
       break;     
     case 11:
+      const deviceVrms11 = parseFloat(dataArray[2]);
+      io.emit('data', {deviceID, deviceVrms11, formattedDate});
       connection.connect(function(err) {
         if(err) throw err;
         console.log("Reading device 11.");
@@ -198,6 +219,8 @@ xbeeAPI.parser.on('data', function(frame) {
       })
       break;    
     case 12:
+      const deviceVrms12 = parseFloat(dataArray[2]);
+      io.emit('data', {deviceID, deviceVrms12, formattedDate});
       connection.connect(function(err) {
         if(err) throw err;
         console.log("Reading device 12.");
@@ -211,57 +234,60 @@ xbeeAPI.parser.on('data', function(frame) {
         })
       })
       break;    
-      case 13:
-        connection.connect(function(err) {
+    case 13:
+      const deviceVrms13 = parseFloat(dataArray[2]);
+      io.emit('data', {deviceID, deviceVrms13, formattedDate});
+      connection.connect(function(err) {
+        if(err) throw err;
+        console.log("Reading device 13.");
+        var sql = "INSERT INTO roomvrmsreading (ID_VRMS_DATE_TIME) VALUES ?";
+        var values = [
+          [deviceData]
+        ]
+        connection.query(sql, [values], function(err) {
           if(err) throw err;
-          console.log("Reading device 13.");
-          var sql = "INSERT INTO roomvrmsreading (ID_VRMS_DATE_TIME) VALUES ?";
-          var values = [
-            [deviceData]
-          ]
-          connection.query(sql, [values], function(err) {
-            if(err) throw err;
-            console.log ("Records updated!");
-          })
+          console.log ("Records updated!");
         })
-        break;     
-      case 14:
-        connection.connect(function(err) {
+      })
+      break;     
+    case 14:
+      const deviceVrms14 = parseFloat(dataArray[2]);
+      io.emit('data', {deviceID, deviceVrms14, formattedDate});
+      connection.connect(function(err) {
+        if(err) throw err;
+        console.log("Reading device 14.");
+        var sql = "INSERT INTO roomvrmsreading (ID_VRMS_DATE_TIME) VALUES ?";
+        var values = [
+          [deviceData]
+        ]
+        connection.query(sql, [values], function(err) {
           if(err) throw err;
-          console.log("Reading device 14.");
-          var sql = "INSERT INTO roomvrmsreading (ID_VRMS_DATE_TIME) VALUES ?";
-          var values = [
-            [deviceData]
-          ]
-          connection.query(sql, [values], function(err) {
-            if(err) throw err;
-            console.log ("Records updated!");
-          })
+          console.log ("Records updated!");
         })
-        break;    
-      case 15:
-        connection.connect(function(err) {
+      })
+      break;    
+    case 15:
+      const deviceVrms15 = parseFloat(dataArray[2]);
+      io.emit('data', {deviceID, deviceVrms15, formattedDate});
+      connection.connect(function(err) {
+        if(err) throw err;
+        console.log("Reading device 15.");
+        var sql = "INSERT INTO roomvrmsreading (ID_VRMS_DATE_TIME) VALUES ?";
+        var values = [
+          [deviceData]
+        ]
+        connection.query(sql, [values], function(err) {
           if(err) throw err;
-          console.log("Reading device 15.");
-          var sql = "INSERT INTO roomvrmsreading (ID_VRMS_DATE_TIME) VALUES ?";
-          var values = [
-            [deviceData]
-          ]
-          connection.query(sql, [values], function(err) {
-            if(err) throw err;
-            console.log ("Records updated!");
-          })
+          console.log ("Records updated!");
         })
-        break; 
+      })
+      break; 
   }
-
   //console.log(formattedDate, '|', deviceID, '>>', deviceVrms);
-
-  io.emit('data', {formattedDate, deviceID, deviceVrms});
 });
 
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/index.html');
+  res.sendFile(__dirname + '/graph.html');
 });
 
 server.listen(3000, () => {

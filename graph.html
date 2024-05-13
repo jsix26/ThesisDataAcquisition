@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Real-Time Data Graph</title>
+  <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
+  </head>
+<body>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <canvas id="myChart1" width="50px" height="10px"></canvas>
+  <canvas id="myChart2" width="50px" height="10px"></canvas>
+  <script>
+    Chart.overrides.line.spanGaps = true;
+    const initialData1 = {
+      labels: [],
+      datasets: [{
+        label: 'Device 1',
+        data: [],
+        backgroundColor: 'rgba(255, 0, 0, 1)',
+        borderColor: 'rgba(255, 0, 0, 1)',
+        borderWidth: 1
+      }]
+    };
+    const initialData2 = {
+      labels: [],
+      datasets: [{
+        label: 'Device 2',
+        data: [],
+        backgroundColor: 'rgba(0, 255, 0, 1)',
+        borderColor: 'rgba(0, 255, 0, 1)',
+        borderWidth: 1
+      }]
+    };
+    var ctx1 = document.getElementById('myChart1').getContext('2d');
+    var myChart1 = new Chart(ctx1, {
+      type: 'line',
+      data: initialData1,
+      options: {
+        scales: {
+          y: {
+            beginAtZero: false,
+            min: 200,
+            max: 250,
+            ticks: {
+              stepSize: 0.25
+            }
+          }
+        }
+      }
+    });
+    var ctx2 = document.getElementById('myChart2').getContext('2d');
+    var myChart2 = new Chart(ctx2, {
+      type: 'line',
+      data: initialData2,
+      options: {
+        scales: {
+          y: {
+            beginAtZero: false,
+            min: 200,
+            max: 250,
+            ticks: {
+              stepSize: 0.25
+            }
+          }
+        }
+      }
+    });    
+    const socket = io();
+    const maxDataPoints = 10;
+    socket.on('data', function(data) {
+      if (data.deviceID == 1) {
+        myChart1.data.labels.push(data.formattedDate);
+        myChart1.data.datasets[0].data.push(data.deviceVrms1); 
+          if (myChart1.data.labels.length > maxDataPoints) {
+            myChart1.data.labels.shift();
+            myChart1.data.datasets[0].data.shift();
+          }
+        myChart1.update();
+      }
+      else if (data.deviceID == 2) {
+        myChart2.data.labels.push(data.formattedDate);
+        myChart2.data.datasets[0].data.push(data.deviceVrms2);  
+          if (myChart2.data.labels.length > maxDataPoints) {
+            myChart2.data.labels.shift();
+            myChart2.data.datasets[0].data.shift();
+          }
+        myChart2.update();
+      }
+    });
+  </script>
+</body>
+</html>

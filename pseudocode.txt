@@ -1,0 +1,158 @@
+// Initialize required libraries and modules
+var SerialPort = require('serialport').SerialPort;
+var xbee_api = require('xbee-api');
+const mysql = require('mysql2');
+const express = require('express');
+const app = express();
+const http = require('http');
+const server = http.createServer(app);
+const { Server } = require('socket.io');
+const io = new Server(server);
+
+// Connect to MySQL database
+const connection = mysql.createConnection({
+  host     : '127.0.0.1',
+  user     : 'root',
+  password : 'admin',
+  database : 'smartsensedatabase'
+});
+connection.connect(function(err) {
+  if (err) {
+    console.error('Error connecting: ' + err.stack);
+    return;
+  }
+  console.log('Connected as id ' + connection.threadId);
+});
+
+// Set up XBee communication
+var xbeeAPI = new xbee_api.XBeeAPI({
+  api_mode: 2
+});
+var serialport = new SerialPort({ path: 'COM14', baudRate: 2400});
+serialport.pipe(xbeeAPI.parser);
+xbeeAPI.builder.pipe(serialport);
+
+// Define event handler for incoming XBee data
+xbeeAPI.parser.on('data', function(frame) {
+  const dataString = frame.data.toString('utf8');
+  const dataArray = dataString.split(',');
+  const deviceID = parseInt(dataArray[1]);
+  const deviceVrms = parseFloat(dataArray[2]);
+  const now = new Date();
+  const formattedDate = now.toLocaleString();
+  const deviceData = (deviceID + ', ' + deviceVrms + ', ' + formattedDate);
+    switch case based on device ID:
+        // For each device ID, perform the following actions:
+        case 1 to 15:
+            parse device-specific data
+            emit data to clients
+            insert data into MySQL database
+            log successful insertion
+});
+
+// Set up route for serving HTML file
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/graph.html');
+});
+
+// Start server listening on port 3000
+server.listen(3000, () => {
+  console.log('listening on *:3000');
+});
+--------------------------------------------------------------------------------------------------------
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Real-Time Data Graph</title>
+  <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
+  </head>
+<body>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <canvas id="myChart1" width="50px" height="10px"></canvas> //Repeat 14 times
+  <script>
+    Chart.overrides.line.spanGaps = true;
+    // Repeat until const initialData15 = {...
+    const initialData1 = {
+      labels: [],
+      datasets: [{
+        label: 'Device 1',
+        data: [],
+        backgroundColor: 'rgba(255, 0, 0, 1)',
+        borderColor: 'rgba(255, 0, 0, 1)',
+        borderWidth: 1
+      }]
+    };
+    const initialData2 = {
+      labels: [],
+      datasets: [{
+        label: 'Device 2',
+        data: [],
+        backgroundColor: 'rgba(0, 255, 0, 1)',
+        borderColor: 'rgba(0, 255, 0, 1)',
+        borderWidth: 1
+      }]
+    };
+    // Repeat until var ctx15 = document.getElementById('myChart15').getContext('2d');
+    // Repeat until var myChart15 = new Chart(ctx15, {...
+    var ctx1 = document.getElementById('myChart1').getContext('2d');
+    var myChart1 = new Chart(ctx1, {
+      type: 'line',
+      data: initialData1,
+      options: {
+        scales: {
+          y: {
+            beginAtZero: false,
+            min: 200,
+            max: 250,
+            ticks: {
+              stepSize: 0.25
+            }
+          }
+        }
+      }
+    });
+    var ctx2 = document.getElementById('myChart2').getContext('2d');
+    var myChart2 = new Chart(ctx2, {
+      type: 'line',
+      data: initialData2,
+      options: {
+        scales: {
+          y: {
+            beginAtZero: false,
+            min: 200,
+            max: 250,
+            ticks: {
+              stepSize: 0.25
+            }
+          }
+        }
+      }
+    });     
+    const socket = io();
+    const maxDataPoints = 10;
+    socket.on('data', function(data) {
+      if (data.deviceID == 1) {
+        myChart1.data.labels.push(data.formattedDate);
+        myChart1.data.datasets[0].data.push(data.deviceVrms1); 
+          if (myChart1.data.labels.length > maxDataPoints) {
+            myChart1.data.labels.shift();
+            myChart1.data.datasets[0].data.shift();
+          }
+        myChart1.update();
+      }
+      else if (data.deviceID == 2) {
+        myChart2.data.labels.push(data.formattedDate);
+        myChart2.data.datasets[0].data.push(data.deviceVrms2);  
+          if (myChart2.data.labels.length > maxDataPoints) {
+            myChart2.data.labels.shift();
+            myChart2.data.datasets[0].data.shift();
+          }
+        myChart2.update();
+      }
+      // And so on until else if (data.deviceID == 15) 
+    });
+  </script>
+</body>
+</html>

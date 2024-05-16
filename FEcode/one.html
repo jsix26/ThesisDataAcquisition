@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Real-Time Data Graph</title>
+	<script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<link rel="stylesheet" href="/one.css">	
+</head>	
+
+<body>
+	<div class="containerbar">
+			<div class="nbarup">
+				<div class="welcometext">
+				<span><span>SMARTSENSE</span></span>
+				</div>
+			</div>	
+			<div class="uppercontainer">
+				<div class="sidebar"></div>
+				<div class="main">
+					<div class="c1">
+						<div class="d11">
+							<div class="s1">
+								<div class="openbutton1">
+									<div class="button" button onclick="togglePopup('sensor1')">Device #1</button></div>
+								</div>
+								<div class="overlay" id="overlay1" style="display: none;">
+									<div class="popup">
+										<div class="content">
+											<h2>Device #1</h2>
+											<canvas id="myChart1" width="50px" height="10px"></canvas>
+										</div>
+										<div class="closebutton">
+											<button onclick="togglePopup('sensor1')">Close</button>
+										</div>
+									</div>
+								</div>	
+							</div>
+						</div>
+						<div class="d1">
+							<div class="s1">
+							<div class="openbutton2">
+								<div class="button" button onclick="togglePopup('sensor2')">Device #2</button></div>
+							</div>
+							<div class="overlay" id="overlay2" style="display: none;">
+								<div class="popup">
+									<div class="content">
+										<h2>Device #2</h2>
+										<canvas id="myChart2" width="50px" height="10px"></canvas>
+									</div>
+									<div class="closebutton">
+										<button onclick="togglePopup('sensor2')">Close</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						</div>
+						<div class="d1">
+							<div class="s1">
+								<div class="openbutton3">
+									<div class="button"button onclick="togglePopup('sensor3')">Device #3</button></div>
+								</div>
+								<div class="overlay" id="overlay3" style="display: none;">
+									<div class="popup">
+										<div class="content">
+											<h2>Device #3</h2>
+											<canvas id="myChart3" width="50px" height="10px"></canvas>
+										</div>
+										<div class="closebutton">
+											<button onclick="togglePopup('sensor3')">Close</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="d1">
+							<div class="s1">
+								<div class="openbutton4">
+									<div class="button"button onclick="togglePopup('sensor4')">Device #4</button></div>
+								</div>
+								<div class="overlay" id="overlay4" style="display: none;">
+									<div class="popup">
+										<div class="content">
+											<h2>Device #4</h2>
+											<canvas id="myChart4" width="50px" height="10px"></canvas>
+										</div>
+										<div class="closebutton">
+											<button onclick="togglePopup('sensor4')">Close</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="d1">
+							<div class="s1">
+								<div class="openbutton5">
+									<div class="button"button onclick="togglePopup('sensor5')">Device #5</button></div>
+								</div>
+								<div class="overlay" id="overlay5" style="display: none;">
+									<div class="popup">
+										<div class="content">
+											<h2>Device #4</h2>
+											<canvas id="myChart5" width="50px" height="10px"></canvas>
+										</div>
+										<div class="closebutton">
+											<button onclick="togglePopup('sensor5')">Close</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="c2">
+						<div class="d11">
+							<div class="s1">
+								<div class="openbutton6">
+									<div class="button" button onclick="togglePopup('sensor6')">Device #6</button></div>
+								</div>
+								<div class="overlay" id="overlay6" style="display: none;">
+									<div class="popup">
+										<div class="content">
+											<h2>Device #6</h2>
+											<canvas id="myChart6" width="50px" height="10px"></canvas>
+										</div>
+										<div class="closebutton">
+											<button onclick="togglePopup('sensor6')">Close</button>
+										</div>
+									</div>
+								</div>	
+							</div>
+						</div>
+						<div class="d1">
+							<div class="s1">
+								<div class="openbutton1">
+									<div class="button" button onclick="togglePopup('sensor7')">Device #7</button></div>
+								</div>
+								<div class="overlay" id="overlay7" style="display: none;">
+									<div class="popup">
+										<div class="content">
+											<h2>Device #7</h2>
+											<canvas id="myChart7" width="50px" height="10px"></canvas>
+										</div>
+										<div class="closebutton">
+											<button onclick="togglePopup('sensor7')">Close</button>
+										</div>
+									</div>
+								</div>	
+							</div>
+						</div>
+						<div class="d1">
+							<div class="s1">
+								<div class="openbutton8">
+									<div class="button" button onclick="togglePopup('sensor8')">Device #8</button></div>
+								</div>
+								<div class="overlay" id="overlay8" style="display: none;">
+									<div class="popup">
+										<div class="content">
+											<h2>Device #8</h2>
+											<canvas id="myChart8" width="50px" height="10px"></canvas>
+										</div>
+										<div class="closebutton">
+											<button onclick="togglePopup('sensor8')">Close</button>
+										</div>
+									</div>
+								</div>	
+							</div>
+						</div>
+						<div class="d1">
+							<div class="s1">
+								<div class="openbutton9">
+									<div class="button" button onclick="togglePopup('sensor9')">Device #9</button></div>
+								</div>
+								<div class="overlay" id="overlay9" style="display: none;">
+									<div class="popup">
+										<div class="content">
+											<h2>Device #9</h2>
+											<canvas id="myChart9" width="50px" height="10px"></canvas>
+										</div>
+										<div class="closebutton">
+											<button onclick="togglePopup('sensor9')">Close</button>
+										</div>
+									</div>
+								</div>	
+							</div>
+						</div>
+						<div class="d1">
+							<div class="s1">
+								<div class="openbutton10">
+									<div class="button" button onclick="togglePopup('sensor10')">Device #10</button></div>
+								</div>
+								<div class="overlay" id="overlay10" style="display: none;">
+									<div class="popup">
+										<div class="content">
+											<h2>Device #10</h2>
+											<canvas id="myChart10" width="50px" height="10px"></canvas>
+										</div>
+										<div class="closebutton">
+											<button onclick="togglePopup('sensor10')">Close</button>
+										</div>
+									</div>
+								</div>	
+							</div>
+						</div>
+					</div>
+					<div class="c3">
+						<div class="d11">
+							<div class="s1">
+								<div class="openbutton11">
+									<div class="button" button onclick="togglePopup('sensor11')">Device #11</button></div>
+								</div>
+								<div class="overlay" id="overlay11" style="display: none;">
+									<div class="popup">
+										<div class="content">
+											<h2>Device #11</h2>
+											<canvas id="myChart11" width="50px" height="10px"></canvas>
+										</div>
+										<div class="closebutton">
+											<button onclick="togglePopup('sensor11')">Close</button>
+										</div>
+									</div>
+								</div>	
+							</div>
+						</div>
+						<div class="d1">
+							<div class="s1">
+								<div class="openbutton12">
+									<div class="button" button onclick="togglePopup('sensor12')">Device #12</button></div>
+								</div>
+								<div class="overlay" id="overlay12" style="display: none;">
+									<div class="popup">
+										<div class="content">
+											<h2>Device #12</h2>
+											<canvas id="myChart12" width="50px" height="10px"></canvas>
+										</div>
+										<div class="closebutton">
+											<button onclick="togglePopup('sensor12')">Close</button>
+										</div>
+									</div>
+								</div>	
+							</div>
+						</div>
+						<div class="d1">
+							<div class="s1">
+								<div class="openbutton13">
+									<div class="button" button onclick="togglePopup('sensor13')">Device #13</button></div>
+								</div>
+								<div class="overlay" id="overlay13" style="display: none;">
+									<div class="popup">
+										<div class="content">
+											<h2>Device #13</h2>
+											<canvas id="myChart13" width="50px" height="10px"></canvas>
+										</div>
+										<div class="closebutton">
+											<button onclick="togglePopup('sensor13')">Close</button>
+										</div>
+									</div>
+								</div>	
+							</div>
+						</div>
+						<div class="d1">
+							<div class="s1">
+								<div class="openbutton14">
+									<div class="button" button onclick="togglePopup('sensor14')">Device #14</button></div>
+								</div>
+								<div class="overlay" id="overlay14" style="display: none;">
+									<div class="popup">
+										<div class="content">
+											<h2>Device #14</h2>
+											<canvas id="myChart14" width="50px" height="10px"></canvas>
+										</div>
+										<div class="closebutton">
+											<button onclick="togglePopup('sensor14')">Close</button>
+										</div>
+									</div>
+								</div>	
+							</div>
+						</div>
+						<div class="d1">
+							<div class="s1">
+								<div class="openbutton15">
+									<div class="button" button onclick="togglePopup('sensor15')">Device #15</button></div>
+								</div>
+								<div class="overlay" id="overlay15" style="display: none;">
+									<div class="popup">
+										<div class="content">
+											<h2>Device #15</h2>
+											<canvas id="myChart15" width="50px" height="10px"></canvas>
+										</div>
+										<div class="closebutton">
+											<button onclick="togglePopup('sensor15')">Close</button>
+										</div>
+									</div>
+								</div>	
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="sidebar1"></div>
+			</div>
+			<div class="lowbar"></div>
+	</div>
+	<script>
+		function togglePopup(popupType) {
+				var overlayId = (popupType === 'sensor1') ? 'overlay1' :
+								(popupType === 'sensor2') ? 'overlay2' :
+								(popupType === 'sensor3') ? 'overlay3':
+								(popupType === 'sensor4') ? 'overlay4':
+								(popupType === 'sensor5') ? 'overlay5':
+								(popupType === 'sensor6') ? 'overlay6':
+								(popupType === 'sensor7') ? 'overlay7':
+								(popupType === 'sensor8') ? 'overlay8':
+								(popupType === 'sensor9') ? 'overlay9':
+								(popupType === 'sensor10') ? 'overlay10':
+								(popupType === 'sensor11') ? 'overlay11':
+								(popupType === 'sensor12') ? 'overlay12':
+								(popupType === 'sensor13') ? 'overlay13':
+								(popupType === 'sensor14') ? 'overlay14':
+								(popupType === 'sensor15') ? 'overlay15':
+								'overlay201';
+				var overlay = document.getElementById(overlayId);
+				overlay.style.display = (overlay.style.display === 'none' || overlay.style.display === '') ? 'block' : 'none';
+				if (overlay.style.display === 'block') {
+				initializeChart(popupType);
+				}   
+			}
+			Chart.overrides.line.spanGaps = true;
+    const initialData1 = {
+      labels: [],
+      datasets: [{
+        label: 'Room Vrms',
+        data: [],
+        backgroundColor: 'rgba(0, 255, 0, 1)',
+        borderColor: 'rgba(0, 255, 0, 1)',
+        borderWidth: 1
+      }]
+    };
+    const initialData2 = {
+      labels: [],
+      datasets: [{
+        label: 'Room Vrms',
+        data: [],
+        backgroundColor: 'rgba(0, 255, 0, 1)',
+        borderColor: 'rgba(0, 255, 0, 1)',
+        borderWidth: 1
+      }]
+    };
+	const initialData3 = {
+      labels: [],
+      datasets: [{
+        label: 'Room Vrms',
+        data: [],
+        backgroundColor: 'rgba(0, 255, 0, 1)',
+        borderColor: 'rgba(0, 255, 0, 1)',
+        borderWidth: 1
+      }]
+    };
+	const initialData4 = {
+      labels: [],
+      datasets: [{
+        label: 'Room Vrms',
+        data: [],
+        backgroundColor: 'rgba(0, 255, 0, 1)',
+        borderColor: 'rgba(0, 255, 0, 1)',
+        borderWidth: 1
+      }]
+    };
+	const initialData5 = {
+      labels: [],
+      datasets: [{
+        label: 'Room Vrms',
+        data: [],
+        backgroundColor: 'rgba(0, 255, 0, 1)',
+        borderColor: 'rgba(0, 255, 0, 1)',
+        borderWidth: 1
+      }]
+    };
+	const initialData6 = {
+      labels: [],
+      datasets: [{
+        label: 'Room Vrms',
+        data: [],
+        backgroundColor: 'rgba(0, 255, 0, 1)',
+        borderColor: 'rgba(0, 255, 0, 1)',
+        borderWidth: 1
+      }]
+    };
+	const initialData7 = {
+      labels: [],
+      datasets: [{
+        label: 'Room Vrms',
+        data: [],
+        backgroundColor: 'rgba(0, 255, 0, 1)',
+        borderColor: 'rgba(0, 255, 0, 1)',
+        borderWidth: 1
+      }]
+    };
+	const initialData8 = {
+      labels: [],
+      datasets: [{
+        label: 'Room Vrms',
+        data: [],
+        backgroundColor: 'rgba(0, 255, 0, 1)',
+        borderColor: 'rgba(0, 255, 0, 1)',
+        borderWidth: 1
+      }]
+    };
+	const initialData9 = {
+      labels: [],
+      datasets: [{
+        label: 'Room Vrms',
+        data: [],
+        backgroundColor: 'rgba(0, 255, 0, 1)',
+        borderColor: 'rgba(0, 255, 0, 1)',
+        borderWidth: 1
+      }]
+    };
+	const initialData10 = {
+      labels: [],
+      datasets: [{
+        label: 'Room Vrms',
+        data: [],
+        backgroundColor: 'rgba(0, 255, 0, 1)',
+        borderColor: 'rgba(0, 255, 0, 1)',
+        borderWidth: 1
+      }]
+    };
+	const initialData11 = {
+      labels: [],
+      datasets: [{
+        label: 'Room Vrms',
+        data: [],
+        backgroundColor: 'rgba(0, 255, 0, 1)',
+        borderColor: 'rgba(0, 255, 0, 1)',
+        borderWidth: 1
+      }]
+    };
+	const initialData12 = {
+      labels: [],
+      datasets: [{
+        label: 'Room Vrms',
+        data: [],
+        backgroundColor: 'rgba(0, 255, 0, 1)',
+        borderColor: 'rgba(0, 255, 0, 1)',
+        borderWidth: 1
+      }]
+    };
+	const initialData13 = {
+      labels: [],
+      datasets: [{
+        label: 'Room Vrms',
+        data: [],
+        backgroundColor: 'rgba(0, 255, 0, 1)',
+        borderColor: 'rgba(0, 255, 0, 1)',
+        borderWidth: 1
+      }]
+    };
+	const initialData14 = {
+      labels: [],
+      datasets: [{
+        label: 'Room Vrms',
+        data: [],
+        backgroundColor: 'rgba(0, 255, 0, 1)',
+        borderColor: 'rgba(0, 255, 0, 1)',
+        borderWidth: 1
+      }]
+    };
+	const initialData15 = {
+      labels: [],
+      datasets: [{
+        label: 'Room Vrms',
+        data: [],
+        backgroundColor: 'rgba(0, 255, 0, 1)',
+        borderColor: 'rgba(0, 255, 0, 1)',
+        borderWidth: 1
+      }]
+    };
+    var ctx1 = document.getElementById('myChart1').getContext('2d');
+    var myChart1 = new Chart(ctx1, {
+      type: 'line',
+      data: initialData1,
+      options: {
+        scales: {
+          y: {
+            beginAtZero: false,
+            min: 200,
+            max: 250,
+            ticks: {
+              stepSize: 0.25
+            }
+          }
+        }
+      }
+    });
+    var ctx2 = document.getElementById('myChart2').getContext('2d');
+    var myChart2 = new Chart(ctx2, {
+      type: 'line',
+      data: initialData2,
+      options: {
+        scales: {
+          y: {
+            beginAtZero: false,
+            min: 200,
+            max: 250,
+            ticks: {
+              stepSize: 0.25
+            }
+          }
+        }
+      }
+    });
+	var ctx3 = document.getElementById('myChart3').getContext('2d');
+    var myChart3 = new Chart(ctx3, {
+      type: 'line',
+      data: initialData3,
+      options: {
+        scales: {
+          y: {
+            beginAtZero: false,
+            min: 200,
+            max: 250,
+            ticks: {
+              stepSize: 0.25
+            }
+          }
+        }
+      }
+    });
+	var ctx4 = document.getElementById('myChart4').getContext('2d');
+    var myChart4 = new Chart(ctx4, {
+      type: 'line',
+      data: initialData4,
+      options: {
+        scales: {
+          y: {
+            beginAtZero: false,
+            min: 200,
+            max: 250,
+            ticks: {
+              stepSize: 0.25
+            }
+          }
+        }
+      }
+    });
+	var ctx5 = document.getElementById('myChart5').getContext('2d');
+    var myChart5 = new Chart(ctx5, {
+      type: 'line',
+      data: initialData5,
+      options: {
+        scales: {
+          y: {
+            beginAtZero: false,
+            min: 200,
+            max: 250,
+            ticks: {
+              stepSize: 0.25
+            }
+          }
+        }
+      }
+    });
+	var ctx6 = document.getElementById('myChart6').getContext('2d');
+    var myChart6 = new Chart(ctx6, {
+      type: 'line',
+      data: initialData6,
+      options: {
+        scales: {
+          y: {
+            beginAtZero: false,
+            min: 200,
+            max: 250,
+            ticks: {
+              stepSize: 0.25
+            }
+          }
+        }
+      }
+    });
+	var ctx7 = document.getElementById('myChart7').getContext('2d');
+    var myChart7 = new Chart(ctx7, {
+      type: 'line',
+      data: initialData7,
+      options: {
+        scales: {
+          y: {
+            beginAtZero: false,
+            min: 200,
+            max: 250,
+            ticks: {
+              stepSize: 0.25
+            }
+          }
+        }
+      }
+    });
+	var ctx8 = document.getElementById('myChart8').getContext('2d');
+    var myChart8 = new Chart(ctx8, {
+      type: 'line',
+      data: initialData8,
+      options: {
+        scales: {
+          y: {
+            beginAtZero: false,
+            min: 200,
+            max: 250,
+            ticks: {
+              stepSize: 0.25
+            }
+          }
+        }
+      }
+    });
+	var ctx9 = document.getElementById('myChart9').getContext('2d');
+    var myChart9 = new Chart(ctx9, {
+      type: 'line',
+      data: initialData9,
+      options: {
+        scales: {
+          y: {
+            beginAtZero: false,
+            min: 200,
+            max: 250,
+            ticks: {
+              stepSize: 0.25
+            }
+          }
+        }
+      }
+    });
+	var ctx10 = document.getElementById('myChart10').getContext('2d');
+    var myChart10 = new Chart(ctx10, {
+      type: 'line',
+      data: initialData10,
+      options: {
+        scales: {
+          y: {
+            beginAtZero: false,
+            min: 200,
+            max: 250,
+            ticks: {
+              stepSize: 0.25
+            }
+          }
+        }
+      }
+    });
+	var ctx11 = document.getElementById('myChart11').getContext('2d');
+    var myChart11 = new Chart(ctx11, {
+      type: 'line',
+      data: initialData11,
+      options: {
+        scales: {
+          y: {
+            beginAtZero: false,
+            min: 200,
+            max: 250,
+            ticks: {
+              stepSize: 0.25
+            }
+          }
+        }
+      }
+    });
+	var ctx12 = document.getElementById('myChart12').getContext('2d');
+    var myChart12 = new Chart(ctx12, {
+      type: 'line',
+      data: initialData12,
+      options: {
+        scales: {
+          y: {
+            beginAtZero: false,
+            min: 200,
+            max: 250,
+            ticks: {
+              stepSize: 0.25
+            }
+          }
+        }
+      }
+    });
+	var ctx13 = document.getElementById('myChart13').getContext('2d');
+    var myChart13 = new Chart(ctx13, {
+      type: 'line',
+      data: initialData13,
+      options: {
+        scales: {
+          y: {
+            beginAtZero: false,
+            min: 200,
+            max: 250,
+            ticks: {
+              stepSize: 0.25
+            }
+          }
+        }
+      }
+    });
+	var ctx14 = document.getElementById('myChart14').getContext('2d');
+    var myChart14 = new Chart(ctx14, {
+      type: 'line',
+      data: initialData14,
+      options: {
+        scales: {
+          y: {
+            beginAtZero: false,
+            min: 200,
+            max: 250,
+            ticks: {
+              stepSize: 0.25
+            }
+          }
+        }
+      }
+    });
+	var ctx15 = document.getElementById('myChart15').getContext('2d');
+    var myChart15 = new Chart(ctx15, {
+      type: 'line',
+      data: initialData15,
+      options: {
+        scales: {
+          y: {
+            beginAtZero: false,
+            min: 200,
+            max: 250,
+            ticks: {
+              stepSize: 0.25
+            }
+          }
+        }
+      }
+    });
+    const socket = io();
+    const maxDataPoints = 10;
+    socket.on('data', function(data) {
+      if (data.deviceID == 1) {
+        myChart1.data.labels.push(data.formattedDate);
+        myChart1.data.datasets[0].data.push(data.deviceVrms1); 
+          if (myChart1.data.labels.length > maxDataPoints) {
+            myChart1.data.labels.shift();
+            myChart1.data.datasets[0].data.shift();
+          }
+        myChart1.update();
+      }
+      else if (data.deviceID == 2) {
+        myChart2.data.labels.push(data.formattedDate);
+        myChart2.data.datasets[0].data.push(data.deviceVrms2);  
+          if (myChart2.data.labels.length > maxDataPoints) {
+            myChart2.data.labels.shift();
+            myChart2.data.datasets[0].data.shift();
+          }
+        myChart2.update();
+      }
+	  else if (data.deviceID == 3) {
+        myChart3.data.labels.push(data.formattedDate);
+        myChart3.data.datasets[0].data.push(data.deviceVrms3);  
+          if (myChart3.data.labels.length > maxDataPoints) {
+            myChart3.data.labels.shift();
+            myChart3.data.datasets[0].data.shift();
+          }
+        myChart3.update('none');
+      }
+	  else if (data.deviceID == 4) {
+        myChart4.data.labels.push(data.formattedDate);
+        myChart4.data.datasets[0].data.push(data.deviceVrms4);  
+          if (myChart4.data.labels.length > maxDataPoints) {
+            myChart4.data.labels.shift();
+            myChart4.data.datasets[0].data.shift();
+          }
+        myChart4.update();
+      }
+	  else if (data.deviceID == 5) {
+        myChart5.data.labels.push(data.formattedDate);
+        myChart5.data.datasets[0].data.push(data.deviceVrms5);  
+          if (myChart5.data.labels.length > maxDataPoints) {
+            myChart5.data.labels.shift();
+            myChart5.data.datasets[0].data.shift();
+          }
+        myChart5.update();
+      }
+	  else if (data.deviceID == 6) {
+        myChart6.data.labels.push(data.formattedDate);
+        myChart6.data.datasets[0].data.push(data.deviceVrms6);  
+          if (myChart6.data.labels.length > maxDataPoints) {
+            myChart6.data.labels.shift();
+            myChart6.data.datasets[0].data.shift();
+          }
+        myChart6.update();
+      }
+	  else if (data.deviceID == 7) {
+        myChart7.data.labels.push(data.formattedDate);
+        myChart7.data.datasets[0].data.push(data.deviceVrms7);  
+          if (myChart7.data.labels.length > maxDataPoints) {
+            myChart7.data.labels.shift();
+            myChart7.data.datasets[0].data.shift();
+          }
+        myChart7.update();
+      }
+	  else if (data.deviceID == 8) {
+        myChart8.data.labels.push(data.formattedDate);
+        myChart8.data.datasets[0].data.push(data.deviceVrms8);  
+          if (myChart8.data.labels.length > maxDataPoints) {
+            myChart8.data.labels.shift();
+            myChart8.data.datasets[0].data.shift();
+          }
+        myChart8.update();
+      }
+	  else if (data.deviceID == 9) {
+        myChart9.data.labels.push(data.formattedDate);
+        myChart9.data.datasets[0].data.push(data.deviceVrms9);  
+          if (myChart9.data.labels.length > maxDataPoints) {
+            myChart9.data.labels.shift();
+            myChart9.data.datasets[0].data.shift();
+          }
+        myChart9.update();
+      }
+	  else if (data.deviceID == 10) {
+        myChart10.data.labels.push(data.formattedDate);
+        myChart10.data.datasets[0].data.push(data.deviceVrms10);  
+          if (myChart10.data.labels.length > maxDataPoints) {
+            myChart10.data.labels.shift();
+            myChart10.data.datasets[0].data.shift();
+          }
+        myChart10.update();
+      }
+	  else if (data.deviceID == 11) {
+        myChart11.data.labels.push(data.formattedDate);
+        myChart11.data.datasets[0].data.push(data.deviceVrms11);  
+          if (myChart11.data.labels.length > maxDataPoints) {
+            myChart11.data.labels.shift();
+            myChart11.data.datasets[0].data.shift();
+          }
+        myChart11.update();
+      }
+	  else if (data.deviceID == 12) {
+        myChart12.data.labels.push(data.formattedDate);
+        myChart12.data.datasets[0].data.push(data.deviceVrms12);  
+          if (myChart12.data.labels.length > maxDataPoints) {
+            myChart12.data.labels.shift();
+            myChart12.data.datasets[0].data.shift();
+          }
+        myChart12.update();
+      }
+	  else if (data.deviceID == 13) {
+        myChart13.data.labels.push(data.formattedDate);
+        myChart13.data.datasets[0].data.push(data.deviceVrms13);  
+          if (myChart13.data.labels.length > maxDataPoints) {
+            myChart13.data.labels.shift();
+            myChart13.data.datasets[0].data.shift();
+          }
+        myChart13.update();
+      }
+	  else if (data.deviceID == 14) {
+        myChart14.data.labels.push(data.formattedDate);
+        myChart14.data.datasets[0].data.push(data.deviceVrms14);  
+          if (myChart14.data.labels.length > maxDataPoints) {
+            myChart14.data.labels.shift();
+            myChart14.data.datasets[0].data.shift();
+          }
+        myChart14.update();
+      }
+	  else if (data.deviceID == 15) {
+        myChart15.data.labels.push(data.formattedDate);
+        myChart15.data.datasets[0].data.push(data.deviceVrms15);  
+          if (myChart15.data.labels.length > maxDataPoints) {
+            myChart15.data.labels.shift();
+            myChart15.data.datasets[0].data.shift();
+          }
+        myChart15.update();
+      }
+    });
+	  </script>
+</body>
+</html>

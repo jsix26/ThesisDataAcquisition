@@ -1,7 +1,7 @@
 var SerialPort = require('serialport').SerialPort;
 var xbee_api = require('xbee-api');
-const mysql = require('mysql2');
 /*
+const mysql = require('mysql2');
 const connection = mysql.createConnection({
   host     : '127.0.0.1',
   user     : 'root',
@@ -322,8 +322,9 @@ xbeeAPI.parser.on('data', function(frame) {
       */
       break; 
   }
-  //console.log(formattedDate, '|', deviceID, '>>', deviceVrms);
+  console.log(formattedDate, '|', deviceID, '>>', deviceVrms);
 });
+/*
 app.use(express.static(path.join(__dirname, '/FEcode')));
 
 app.get('/', (req, res) => {
